@@ -1,0 +1,11 @@
+# Use the official Node.js image
+FROM node:14
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Install Angular CLI globally
+RUN npm install -g @angular/cli
+
+# Expose Angular port
+EXPOSE 4200

@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  php:
+    container_name: php_container
+    build:
+      context: .
+      dockerfile: Dockerfile_php
+    ports:
+      - "80:80"
+    volumes:
+      - ./laravel_project:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql_container
+    build:
+      context: .
+      dockerfile: Dockerfile_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  angular:
+    container_name: angular_containere
+    build:
+      context: .
+      dockerfile: Dockerfile_angular
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./angular_project:/usr/src/app
+    depends_on:
+      - php
+
+  nginx:
+    container_name: nginx_container
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx_conf:/etc/nginx/conf.d
+    depends_on:
+      - php
