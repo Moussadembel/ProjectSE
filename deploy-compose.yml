@@ -3,7 +3,8 @@ name: Build and Push Docker Images
 on:
   push:
     branches:
-      - compose
+      - main
+  pull_request:
 
 jobs:
   build-and-push:
@@ -12,29 +13,44 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+        
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Nginx image
-        run: |
-          docker build -t mohamed046/ry2dr:nginx -f ./Dockerfile_nginx .
-          docker push mohamed046/ry2dr:nginx
-      - name: Build and push Angular image
-        run: |
-          docker build -t mohamed046/ry2dr:angular -f ./Dockerfile_angular .
-          docker push mohamed046/ry2dr:angular
       - name: Build and push PHP image
+        env:
+          REPOSITORY: mohamed046/ry2dr
+          IMAGE_TAG: php
         run: |
-          docker build -t mohamed046/ry2dr:php -f /Dockerfile_php .
-          docker push mohamed046/ry2dr:php
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_php .
+          docker push $REPOSITORY:$IMAGE_TAG
+
       - name: Build and push MySQL image
+        env:
+          REPOSITORY: mohamed046/ry2dr
+          IMAGE_TAG: mysql
         run: |
-          docker build -t mohamed046/ry2dr:mysql -f ./Dockerfile_mysql .
-          docker push mohamed046/ry2dr:mysql
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_mysql .
+          docker push $REPOSITORY:$IMAGE_TAG
+
+      - name: Build and push Nginx image
+        env:
+          REPOSITORY: mohamed046/ry2dr
+          IMAGE_TAG: nginx
+        run: |
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_nginx .
+          docker push $REPOSITORY:$IMAGE_TAG
+
+      - name: Build and push Angular image
+        env:
+          REPOSITORY: mohamed046/ry2dr
+          IMAGE_TAG: angular
+        run: |
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_angular .
+          docker push $REPOSITORY:$IMAGE_TAG
 
       - name: Deploy with docker-compose
         run: |
