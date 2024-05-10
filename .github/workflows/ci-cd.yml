@@ -1,10 +1,10 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Images
 
 on:
   push:
-  
+    branches:
+      - main
   pull_request:
-  
 
 jobs:
   build-and-push:
@@ -14,26 +14,44 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Copy files to Docker context
-        run: |
-          cp -R ./* $GITHUB_WORKSPACE/.github/workflows/
-          
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build and push PHP image
         env:
           REPOSITORY: mohamed046/ry2dr
-          IMAGE_TAG: tag
+          IMAGE_TAG: php
         run: |
-          docker build -t $REPOSITORY:$IMAGE_TAG -f .github/workflows/Dockerfile .
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_php .
           docker push $REPOSITORY:$IMAGE_TAG
-      - name: run locally
+
+      - name: Build and push MySQL image
         env:
           REPOSITORY: mohamed046/ry2dr
-          IMAGE_TAG: tag
+          IMAGE_TAG: mysql
         run: |
-          docker run -d -p 8080:80 $REPOSITORY:$IMAGE_TAG
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_mysql .
+          docker push $REPOSITORY:$IMAGE_TAG
+
+      - name: Build and push Nginx image
+        env:
+          REPOSITORY: mohamed046/ry2dr
+          IMAGE_TAG: nginx
+        run: |
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_nginx .
+          docker push $REPOSITORY:$IMAGE_TAG
+
+      - name: Build and push Angular image
+        env:
+          REPOSITORY: mohamed046/ry2dr
+          IMAGE_TAG: angular
+        run: |
+          docker build -t $REPOSITORY:$IMAGE_TAG -f Dockerfile_angular .
+          docker push $REPOSITORY:$IMAGE_TAG
+
+      - name: Deploy with docker-compose
+        run: |
+          docker-compose -f docker-compose.yml up -d
