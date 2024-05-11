@@ -13,6 +13,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Copy files to Docker context
+        run: |
+          cp -R ./* $GITHUB_WORKSPACE/
+
         
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
