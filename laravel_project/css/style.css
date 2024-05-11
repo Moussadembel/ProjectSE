@@ -1,0 +1,52 @@
+body {
+  background: #f9f9f9; /* Nouvelle couleur de fond */
+}
+
+/* Modifications de couleurs pour les parties spécifiques */
+.add-section {
+  background: linear-gradient(to right, #ffc0cb, #ff69b4); /* Dégradé de rose pour la section "add" */
+}
+
+.add-section button {
+  background: linear-gradient(to right, #ff69b4, #ff1493); /* Dégradé de rose pour le bouton */
+}
+
+#errorMes {
+  background: linear-gradient(to right, #ffc0cb, #ff69b4); /* Dégradé de rose pour le message d'erreur */
+}
+
+.show-todo-section {
+  background: linear-gradient(to right, #ff69b4, #ffc0cb); /* Dégradé de rose pour la section de liste de tâches */
+}
+
+.remove-to-do:hover {
+  background: #ff69b4; /* Nouvelle couleur de fond au survol */
+  color: #fff; /* Nouvelle couleur du texte au survol */
+}
+
+body {
+    background: #f9f9f9; /* Nouvelle couleur de fond */
+  }
+  
+  /* Modifications de couleurs pour les parties spécifiques */
+  .add-section {
+    background: linear-gradient(to right, #ffc0cb, #ff69b4); /* Dégradé de rose pour la section "add" */
+  }
+  
+  .add-section button {
+    background: linear-gradient(to right, #ff69b4, #ff1493); /* Dégradé de rose pour le bouton */
+  }
+  
+  #errorMes {
+    background: linear-gradient(to right, #ffc0cb, #ff69b4); /* Dégradé de rose pour le message d'erreur */
+  }
+  
+  .show-todo-section {
+    background: linear-gradient(to right, #ff69b4, #ffc0cb); /* Dégradé de rose pour la section de liste de tâches */
+  }
+  
+  .remove-to-do:hover {
+    background: #ff69b4; /* Nouvelle couleur de fond au survol */
+    color: #fff; /* Nouvelle couleur du texte au survol */
+  }
+  
