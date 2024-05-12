@@ -1,11 +1,17 @@
-<?php 
+<?php
 
-$sName = "localhost";
+$sName = "mysql";
 $uName = "root";
-$pass = "";
+$pass = "root";
 $db_name = "todolist";
-$port="3306";
+$port = "3306";
 
-  $conn= new mysqli($sName,$uName,$pass,$db_name,$port);
+try {
+    $conn = new PDO("mysql:host=$sName;dbname=$db_name;port=$port", $uName, $pass);
+    // Set PDO attributes here if needed
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+} catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
 ?>
